@@ -1,0 +1,73 @@
+﻿@page "/TodoPages/AddTodo"
+<div class="jumbotron">
+    <h3 class="text-xl-center">Todo Info</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <EditForm Model="@todo" OnSubmit="todoAdd">
+            <div class="form-group">
+                <label>Title</label>
+                <InputText class="form-control" @bind-Value="@todo.Title"></InputText>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <InputText class="form-control" @bind-Value="@todo.Status"></InputText>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block">Save</button>
+
+            </div>
+        </EditForm>
+
+    </div>
+    <div class="col-md-6">
+        <table class="table table-sm table-bordered table-striped">
+            <thead class="bg-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in todoget.getAll())
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Status</td>
+                        
+                        <td>
+                            <a href="TodoPages/UpdateTodo/@item.Id" class="btn "><i class="fas fa-edit"></i></a>
+                            <a href="#" class="btn btn-danger "><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+@code {
+
+
+    Todo todo = new Todo();
+    TodoGateWay todoget = new TodoGateWay();
+
+    private void todoAdd()
+    {
+
+      
+        todoget.addTodo(todo);
+
+
+    }
+
+
+}
